@@ -3,9 +3,9 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="base/base.vcxproj" />
-  <Project Path="base2/base2.vcxproj" />
-  <Project Path="base3/base3.vcxproj" />
-  <Project Path="base4/base4.vcxproj" />
-  <Project Path="base5/base5.vcxproj" />
+  <Project Path="base/base.vcxproj" Id="2a28606b-087b-4b36-af4a-8532700648fe" />
+  <Project Path="base2/base2.vcxproj" Id="f920b523-6d45-46b6-adb0-769ec5f74775" />
+  <Project Path="base3/base3.vcxproj" Id="edbd30d5-0780-4231-a60f-965e8d425ec1" />
+  <Project Path="base4/base4.vcxproj" Id="6b1904e2-fbd7-4684-9afd-a7abeaf84fff" />
+  <Project Path="base5/base5.vcxproj" Id="bd915b79-ad5f-455e-95a2-fef7f494736e" />
 </Solution>
