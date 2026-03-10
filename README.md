@@ -85,6 +85,7 @@
 
     ![alt text](image-7.png)
 
+## 0309(월)
 
 7. function(함수)
 
@@ -129,4 +130,47 @@
 
     * static 붙으면 클래스 외부에서 반드시 초기화!
 
-    
+    ![alt text](image-27.png)
+
+    ![alt text](image-28.png)
+
+    ![alt text](image-29.png)
+
+    ![alt text](image-30.png)
+
+    - 복사 생성자는 기존 인스턴스와 똑같은 값을 가진 새로운 객체를 만듦.
+    - 복사 생성자를 만들지 않으면 시스템이 합성 복사 생성자를 만듦.
+
+    ![alt text](image-31.png)
+
+    ![alt text](image-32.png)
+
+    - Singleton 패턴은 프로그램에서 객체를 하나만 생성하도록 만드는 디자인 패턴이다.
+
+    ![alt text](image-33.png)
+
+    - 접근자 멤버 함수(Getter)
+        - 읽기 전용 함수이며, 변경하지 않음을 확실히 할 때 const 붙임.
+            - double getRadius() const;
+            - double getPerimeter () const;
+            - double getArea () const;
+
+    - 설정자 멤버 함수(Setter)
+        - 설정자에는 const 한정자를 붙이지 않음.
+            - void setRadius(double rds);
+
+
+    ![alt text](image-34.png)
+
+    ![alt text](image-35.png)
+
+    ![alt text](image-36.png)
+
+ ## 0310(화)
+ ### 객체 확장 
+
+
+![alt text](image-37.png)
+
+![alt text](image-38.png)
+
