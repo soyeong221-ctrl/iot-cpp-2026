@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="ArrayEx/ArrayEx.vcxproj" />
+  <Project Path="base - applicate/base - applicate.vcxproj" />
+  <Project Path="base/base.vcxproj" />
+  <Project Path="Mine/Mine.vcxproj" />
+</Solution>
