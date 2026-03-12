@@ -3,8 +3,8 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="ArrayEx/ArrayEx.vcxproj" />
-  <Project Path="base - applicate/base - applicate.vcxproj" />
-  <Project Path="base/base.vcxproj" />
-  <Project Path="Mine/Mine.vcxproj" />
+  <Project Path="ArrayEx/ArrayEx.vcxproj" Id="622b5b49-d7b5-4467-a95a-8bca23fa8cd7" />
+  <Project Path="base - applicate/base - applicate.vcxproj" Id="9b3e18ea-9995-4474-9d41-fcb51e5ac81c" />
+  <Project Path="base/base.vcxproj" Id="cf4422eb-7071-4426-b978-68b28567ee92" />
+  <Project Path="Mine/Mine.vcxproj" Id="c5a4b172-12ce-49d6-813d-733fd26a5673" />
 </Solution>

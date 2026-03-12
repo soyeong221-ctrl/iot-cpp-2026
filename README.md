@@ -236,3 +236,27 @@
 ## 0311(수)
 ### 배열
 
+![alt text](image-52.png)
+
+## 0312(목)
+### 남은 부분
+
+![alt text](image-53.png)
+
+- 제네릭 - 타입을 나중에 결정해서 여러 타입에서 재사용 가능한 코드
+
+![alt text](image-54.png)
+
+- stack LIFO
+- queue FIFO(큐삐뽀)
+
+![alt text](image-55.png)
+
+![alt text](image-56.png)
+
+
+### test: 학생 관리 프로그램 만들기 
+
+![alt text](image-59.png)
+
+[소스](./Day0312-Solution/evaluation/memMng_psy.cpp)
