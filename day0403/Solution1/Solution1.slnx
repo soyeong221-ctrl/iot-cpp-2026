@@ -1,0 +1,13 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="exeprj/exeprj.vcxproj" />
+  <Project Path="moveconstructor/moveconstructor.vcxproj" />
+  <Project Path="tempObj/tempObj.vcxproj" />
+  <Project Path="tempObj2/tempObj2.vcxproj" />
+  <Project Path="tempObj3/tempObj3.vcxproj" />
+  <Project Path="vector/vector.vcxproj" />
+  <Project Path="vector2/vector2.vcxproj" />
+</Solution>
