@@ -1,0 +1,12 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="deque2/deque2.vcxproj" Id="4e51ea8a-b4bf-476b-92d8-cd851401bb95" />
+  <Project Path="dezue/dezue.vcxproj" Id="b5d1d9ab-5397-4d1c-9d9d-4aefc512dd30" />
+  <Project Path="iterator1/iterator1.vcxproj" Id="a8976141-af64-45bd-be67-67277895a21d" />
+  <Project Path="map/map.vcxproj" Id="b39c4e6e-6747-43ef-9304-30b2b3becf61" />
+  <Project Path="smartpointer1/smartpointer1.vcxproj" Id="ef7ce3a4-76a2-4aba-8313-a2992f7915e7" />
+  <Project Path="vector3/vector3.vcxproj" Id="f34b0ccc-e7b9-49dc-98bc-62689905b200" />
+</Solution>

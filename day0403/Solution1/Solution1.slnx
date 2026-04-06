@@ -3,11 +3,11 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="exeprj/exeprj.vcxproj" />
-  <Project Path="moveconstructor/moveconstructor.vcxproj" />
-  <Project Path="tempObj/tempObj.vcxproj" />
-  <Project Path="tempObj2/tempObj2.vcxproj" />
-  <Project Path="tempObj3/tempObj3.vcxproj" />
-  <Project Path="vector/vector.vcxproj" />
-  <Project Path="vector2/vector2.vcxproj" />
+  <Project Path="exeprj/exeprj.vcxproj" Id="844b389c-5900-425a-95fb-ff7308b879e1" />
+  <Project Path="moveconstructor/moveconstructor.vcxproj" Id="19170457-8268-4a01-8c1e-04583c2752c6" />
+  <Project Path="tempObj/tempObj.vcxproj" Id="cea9c70e-9789-48e3-9e78-fc07c5e6f23d" />
+  <Project Path="tempObj2/tempObj2.vcxproj" Id="90031852-0aa9-4405-a06b-d44ef28967cc" />
+  <Project Path="tempObj3/tempObj3.vcxproj" Id="106fd71c-9f42-467e-be2d-4ec240d3452e" />
+  <Project Path="vector/vector.vcxproj" Id="450f7f53-b783-463d-bb16-23206e3bba5d" />
+  <Project Path="vector2/vector2.vcxproj" Id="e599e92c-d5ac-4206-9b9e-3f542b79d4b4" />
 </Solution>
