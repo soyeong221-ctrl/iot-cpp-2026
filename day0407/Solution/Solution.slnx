@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="smartpointer2/smartpointer2.vcxproj" />
+  <Project Path="thread1/thread1.vcxproj" />
+  <Project Path="virtual/virtual.vcxproj" />
+</Solution>
