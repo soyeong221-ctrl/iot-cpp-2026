@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{cee73c3e-db85-49ef-8aae-7466ef0c6ac1}</ProjectGuid>
-    <RootNamespace>PlanMate</RootNamespace>
+    <ProjectGuid>{fac1da7d-2ef6-4f1f-a034-4e01453bb013}</ProjectGuid>
+    <RootNamespace>mainreviewver</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,13 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Task.cpp" />
-    <ClCompile Include="TaskManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Task.h" />
-    <ClInclude Include="TaskManager.h" />
+    <ClCompile Include="main review ver.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
