@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <sstream>
 
+
 std::string centerAlign(const std::string& text, int width) {
 	int padding = width - (int)text.length();
 
@@ -213,34 +214,11 @@ bool TaskManager::hasTaskOnDate(std::string date) {
 
 bool TaskManager::hasTodoOnDate(std::string date) {
 	for (int i = 0; i < tasks.size(); i++) {
-		if (tasks[i].date == date && tasks[i].type == 1) {
+		if (tasks[i].date == date && tasks[i].type == 1 && !tasks[i].isDone) {
 			return true;
 		}
 	}
 	return false;
-}
-
-// 출력
-void TaskManager::printSimpleTasks() {
-	for (int i = 0; i < tasks.size(); i++) {
-		std::cout << i + 1 << ". ";
-
-		if (tasks[i].type == 0) {
-			std::cout << "[일정] " << tasks[i].time << " " << tasks[i].title;
-		}
-		else {
-			std::cout << (tasks[i].isDone ? "[DONE] " : "[TO-DO] ");
-			std::cout << tasks[i].title;
-		}
-
-		std::cout << " (" << tasks[i].date << ")";
-
-		if (tasks[i].type == 1) {
-			std::cout << " / 우선순위: " << tasks[i].priority;
-		}
-
-		std::cout << std::endl;
-	}
 }
 
 void TaskManager::showTasksByDateInternal(std::string targetDate) {
@@ -316,44 +294,6 @@ void TaskManager::showAllTasks() {
 	}
 }
 
-// 2번: 날짜별 일정 보기
-void TaskManager::showTasksByDate() {
-	std::string targetDate;
-
-	std::cout << "조회할 날짜 입력 (YYYY-MM-DD): ";
-	std::getline(std::cin, targetDate);
-
-	bool found = false;
-
-	std::cout << "\n=== " << targetDate << " ===" << std::endl;
-
-	// 일정
-	std::cout << "\n[일정]" << std::endl;
-	for (int i = 0; i < tasks.size(); i++) {
-		if (tasks[i].date == targetDate && tasks[i].type == 0) {
-			std::cout << "- " << tasks[i].time << " " << tasks[i].title << std::endl;
-			found = true;
-		}
-	}
-
-	// 할일
-	std::cout << "\n[할일]" << std::endl;
-	for (int i = 0; i < tasks.size(); i++) {
-		if (tasks[i].date == targetDate && tasks[i].type == 1) {
-
-			std::cout << "- " << tasks[i].title << " (우선순위: " << tasks[i].priority << ")";
-
-			if (tasks[i].isDone) {
-				std::cout << " [DONE]";
-			}
-			std::cout << std::endl;
-			found = true;
-		}
-	}
-	if (!found) {
-		std::cout << "\n해당 날짜에 일정이 없습니다." << std::endl;
-	}
-}
 
 // 사용자 액션
 // 3번: 일정 추가
@@ -390,10 +330,10 @@ void TaskManager::addTask() {
 		}
 	}
 	else {
-		t.priority = safeInputInt("우선순위 1=★★★, 2=★★ 3=★ : ");
+		t.priority = safeInputInt("우선순위 1=★★★ 2=★★ 3=★ : ");
 
 		if (t.priority < 1 || t.priority > 3) {
-			std::cout << "우선순위는 1=★★★, 2=★★ 3=★ 입니다.\n";
+			std::cout << "우선순위는 1=★★★ 2=★★ 3=★ 입니다.\n";
 			return;
 		}
 	}
@@ -515,7 +455,7 @@ void TaskManager::editTask() {
 	// =========================
 	// 3. 날짜 (Enter 유지)
 	// =========================
-	std::cout << "새 날짜 (YYYY-MM-DD, Enter = 유지): ";
+	std::cout << "새 날짜 YYYY-MM-DD (Enter = 유지): ";
 	std::getline(std::cin, input);
 
 	if (!input.empty()) {
@@ -529,23 +469,26 @@ void TaskManager::editTask() {
 	}
 
 	// =========================
-	// 4. 우선순위 (Enter 유지)
-	// =========================
-	std::cout << "새 우선순위 1=★★★, 2=★★ 3=★ (Enter = 유지): ";
-	std::getline(std::cin, input);
+// 4. 우선순위 (할일만)
+// =========================
+	if (tasks[realIndex].type == 1) {
 
-	if (!input.empty()) {
-		try {
-			int p = std::stoi(input);
-			if (p >= 1 && p <= 3) {
-				tasks[realIndex].priority = p;
+		std::cout << "새 우선순위 1=★★★ 2=★★ 3=★ (Enter = 유지): ";
+		std::getline(std::cin, input);
+
+		if (!input.empty()) {
+			try {
+				int p = std::stoi(input);
+				if (p >= 1 && p <= 3) {
+					tasks[realIndex].priority = p;
+				}
+				else {
+					std::cout << "우선순위는 1~3 입니다.\n";
+				}
 			}
-			else {
-				std::cout << "우선순위는 1=★★★, 2=★★ 3=★ 입니다.\n";
+			catch (...) {
+				std::cout << "숫자만 입력하세요.\n";
 			}
-		}
-		catch (...) {
-			std::cout << "숫자만 입력하세요.\n";
 		}
 	}
 
@@ -589,7 +532,9 @@ void TaskManager::toggleDone() {
 	// =========================
 	// 2. 입력
 	// =========================
-	int index = safeInputInt("완료 처리할 번호: ") - 1;
+	std::cout << "\n-----------------------------------------\n";
+
+	int index = safeInputInt("\n완료 처리할 번호: ") - 1;
 
 	if (index < 0 || index >= indexList.size()) {
 		std::cout << "잘못된 번호입니다.\n";
@@ -609,6 +554,8 @@ void TaskManager::toggleDone() {
 	pauseScreen();
 }
 
+const int BOX_WIDTH = 44;
+
 // UI 컨트롤
 
 void TaskManager::showCalendar() {
@@ -618,61 +565,70 @@ void TaskManager::showCalendar() {
 	if (!isValidDate(selectedDate)) {
 		selectedDate = getToday();
 	}
+
 	int year = std::stoi(selectedDate.substr(0, 4));
 	int month = std::stoi(selectedDate.substr(5, 2));
 
 	int daysInMonth = getDaysInMonth(year, month);
 	int startDay = getStartDay(year, month);
 
-
-	std::cout << "=========================================\n";
-	std::cout << "            PlanMate Calendar\n";
-	std::cout << "=========================================\n\n";
-
 	std::string today = getToday();
 
-	std::cout << "        [ 오늘 날짜: " << today << " ]\n\n";
+	// =========================
+	// 🔷 TOP BOX📅
+	// =========================
+	std::cout << "┌────────────────────────────────────────────┐\n";
+	std::cout << "│            📅 PlanMate Calendar            │\n";
+	std::cout << "├────────────────────────────────────────────┤\n";
 
+	std::string todayStr = "Today: " + today;
+	std::cout << "│" << centerAlign(todayStr, BOX_WIDTH) << "│\n";
 
-	std::cout << centerAlign("Sun", 6)
+	std::cout << "├────────────────────────────────────────────┤\n";
+
+	// =========================
+	// 요일
+	// =========================
+	std::cout << "│ ";
+	std::cout << centerAlign(" Sun", 6)
 		<< centerAlign("Mon", 6)
 		<< centerAlign("Tue", 6)
 		<< centerAlign("Wed", 6)
 		<< centerAlign("Thu", 6)
 		<< centerAlign("Fri", 6)
-		<< centerAlign("Sat", 6)
-		<< "\n";
+		<< centerAlign(" Sat", 6);
+	std::cout << " │\n";
 
+	std::cout << "│ " << std::string(BOX_WIDTH - 2, ' ') << " │\n";
+
+	// =========================
+	// 시작 공백
+	// =========================
+	int currentCol = 0;
+
+	// 첫 줄 시작
+	std::cout << "│ ";
+
+	// 시작 공백
 	for (int i = 0; i < startDay; i++) {
-		std::cout << centerAlign("", 6);
+		std::cout << std::string(6, ' ');
+		currentCol++;
 	}
 
-	// 선택 날짜 추출
-	std::string dayStr;
-	if (selectedDate[8] == '0')
-		dayStr = selectedDate.substr(9, 1);
-	else
-		dayStr = selectedDate.substr(8, 2);
-
-	int selectedDay = std::stoi(dayStr);
-
-	// 날짜 출력 (정렬 맞추기)
+	// =========================
+	// 날짜 출력 (핵심 유지)
+	// =========================
 	for (int day = 1; day <= daysInMonth; day++) {
 
-		// 1. 날짜 만들기
 		std::string base = selectedDate.substr(0, 8);
 
 		std::string checkDate;
-
 		if (day < 10)
 			checkDate = base + "0" + std::to_string(day);
 		else
 			checkDate = base + std::to_string(day);
 
-		// 일정 여부
 		bool hasTodo = hasTodoOnDate(checkDate);
-
-		// 오늘 여부
 		bool isToday = (checkDate == today);
 
 		std::string output;
@@ -683,15 +639,37 @@ void TaskManager::showCalendar() {
 			output = std::to_string(day) + "*";
 		else
 			output = std::to_string(day);
-		
-		std::cout << centerAlign(output, 6);
 
-		// 줄바꿈
-		if ((day + startDay) % 7 == 0)
-			std::cout << std::endl;
+		std::cout << centerAlign(output, 6);
+		currentCol++;
+
+		// 🔥 7칸 채우면 줄 종료
+		if (currentCol == 7) {
+			std::cout << " │\n";
+			currentCol = 0;
+
+			// 다음 줄 시작 (마지막 줄 제외)
+			if (day != daysInMonth) {
+				std::cout << "│ ";
+			}
+		}
 	}
 
-	std::cout << "\n\n";
+	if (currentCol != 0) {
+		for (int i = currentCol; i < 7; i++) {
+			std::cout << std::string(6, ' ');
+		}
+		std::cout << " │\n";
+	}
+
+	// =========================
+	// BOTTOM BOX
+	// =========================
+	std::cout << "├────────────────────────────────────────────┤\n";
+	std::cout << "│   * = [TO-DO] 있음       [ ] = 오늘 날짜   │\n";
+	std::cout << "│                                            │\n";
+	std::cout << "│   ♡        ♡        ♡        ♡        ♡    │\n";
+	std::cout << "└────────────────────────────────────────────┘\n\n";
 }
 
 // 날짜 상세 화면
@@ -700,7 +678,7 @@ void TaskManager::showDateDetail() {
 	// 캘린더 먼저 보여주기
 	showCalendar();
 
-	std::cout << "\n============== " << selectedDate << " ==============\n";
+	std::cout << "================= " << selectedDate << " =================\n";
 
 	std::cout << "\n[일정]\n";
 	for (int i = 0; i < tasks.size(); i++) {
@@ -728,10 +706,10 @@ void TaskManager::showDateDetail() {
 
 	std::cout << "\n";
 
-	std::cout << "\n-----------------------------------------\n";
-	std::cout << "[A] 추가        [E] 수정        [D] 삭제\n";
-	std::cout << "[S] 검색        [B] 뒤로        [Q] 종료\n";
-	std::cout << "-----------------------------------------\n";
+	std::cout << "\n----------------------------------------------\n";
+	std::cout << "[A] 추가          [E] 수정          [D] 삭제\n";
+	std::cout << "[S] 날짜 이동     [B] 뒤로          [0] 종료\n";
+	std::cout << "----------------------------------------------\n";
 }
 
 
@@ -742,23 +720,20 @@ void TaskManager::calendarLoop() {
 
 		showCalendar();
 
-		std::cout << "=========================================\n";
+		std::cout << "==============================================\n";
 		std::cout << "\n[1] 날짜 선택\n";
 		std::cout << "[2] [TO-DO] LIST\n";
-		std::cout << "[Q] 종료\n";
-		std::cout << "\n[입력] : ";
+		std::cout << "[0] 종료\n\n";
 
-		std::string input;
-		std::getline(std::cin, input);
+		int choice = safeInputInt("[입력]: ", -1);
 
-		// 종료
-		if (input == "Q" || input == "q")
+		if (choice == 0)
 			break;
 
 		// =========================
 		// 1. 날짜 선택
 		// =========================
-		if (input == "1") {
+		if (choice == 1) {
 
 			while (true) {
 				std::cout << "날짜 입력 (YYYY-MM-DD): ";
@@ -772,9 +747,9 @@ void TaskManager::calendarLoop() {
 
 			// 상세 화면 루프
 			while (true) {
-
 				showDateDetail();
 
+				std::string input;
 				std::getline(std::cin, input);
 
 				if (input == "A" || input == "a") addTask();
@@ -782,12 +757,13 @@ void TaskManager::calendarLoop() {
 				else if (input == "D" || input == "d") deleteTask();
 				else if (input == "B" || input == "b") break;
 				else if (input == "S" || input == "s") {
-
 					std::string newDate;
 
 					while (true) {
 						std::cout << "검색할 날짜 입력 (YYYY-MM-DD): ";
 						std::getline(std::cin, newDate);
+
+						if (newDate.empty()) break;
 
 						if (isValidDate(newDate)) {
 							selectedDate = newDate;
@@ -800,7 +776,7 @@ void TaskManager::calendarLoop() {
 
 					continue;        // 상세 루프 유지하면서 바로 갱신
 				}
-				else if (input == "Q" || input == "q") exit(0);
+				else if (input == "0") exit(0);
 			}
 		}
 
@@ -809,7 +785,7 @@ void TaskManager::calendarLoop() {
 		// =========================
 		// 2. [TO-DO] LIST
 		// =========================
-		else if (input == "2") {
+		else if (choice == 2) {
 			showTodayTodo();
 		}
 	}
@@ -839,24 +815,29 @@ void TaskManager::showTodayTodo() {
 		return a.priority < b.priority;
 		});
 
-	std::cout << "=========================================\n";
-	std::cout << "               TO-DO LIST \n";
-	std::cout << "=========================================\n\n";
+	std::cout << "┌──────────────────────────────────────────┐\n";
+	std::cout << "│                TO-DO LIST                │\n";
+	std::cout << "├──────────────────────────────────────────┤\n\n";
 
 	for (int i = 0; i < todayTodos.size(); i++) {
 
-		std::cout << i + 1 << ". ";
+		std::cout << "  " << i + 1 << ". ";
 
 		if (!todayTodos[i].isDone)
 			std::cout << "❗ ";
 
-		std::cout << todayTodos[i].title
-			<< " (우선순위: " << todayTodos[i].priority << ")";
+		std::cout << todayTodos[i].title;
 
 		if (todayTodos[i].isDone)
 			std::cout << " [DONE]";
 
-		std::cout << "\n";
+		std::cout << "\n      └─ 우선순위: ";
+
+		if (todayTodos[i].priority == 1) std::cout << "★★★";
+		else if (todayTodos[i].priority == 2) std::cout << "★★";
+		else std::cout << "★";
+
+		std::cout << "\n\n";
 	}
 
 	if (todayTodos.empty()) {
@@ -865,15 +846,18 @@ void TaskManager::showTodayTodo() {
 		return;        // 바로 뒤로
 	}
 
-	std::cout << "\n-----------------------------------------\n";
-	std::cout << "\n[C] [DONE] 표시  [B] 뒤로\n";
-	std::cout << "\n[입력]: ";
+	std::cout << "\n├──────────────────────────────────────────┤\n";
+	std::cout << "\n[1] 완료 처리";
+	std::cout << "\n[2] 뒤로가기\n\n";
 
-	std::string input;
-	std::getline(std::cin, input);
 
-	if (input == "C" || input == "c") {
+	int choice = safeInputInt("[입력]: ");
+
+	if (choice == 1) {
 		toggleDone();
+	}
+	else if (choice == 2) {
+		return;
 	}
 }
 
